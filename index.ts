@@ -8,7 +8,7 @@ export interface phno{
     name:String,
     phno:Number
 }
-
+let name:String=""
 let intersection:email|phno=
 Math.random()>0.5
 ?{
@@ -41,3 +41,63 @@ function validate(input:email):email{
 }
 validate({name:"mike",email:"dsadsa"});
 
+//type signature
+
+function typeSignatures(method:"email"|"phone",...people:(email|phno)[]):void{
+    if(method=="email"){
+        console.log("send email")
+    }else{
+        console.log("send text")
+    }
+}
+typeSignatures("email",{name:"mike",email:"dsadsa"});
+typeSignatures("phone",{name:"mike",email:"dsadsa"}); //shouldnt work
+
+
+//fix
+
+//overload signature
+function typeSignaturesFix(method:"email",...people:(email)[]):void;
+function typeSignaturesFix(method:"phone",...people:(phno)[]):void;
+
+
+function typeSignaturesFix(method:"email"|"phone",...people:(email|phno)[]):void{
+    if(method=="email"){
+        console.log("send email")
+    }else{
+        console.log("send text")
+    }
+}
+typeSignaturesFix("email",{name:"mike",email:"dsadsa"});
+//typeSignaturesFix("phone",{name:"mike",email:"dsadsa"}); //uncomment and check it doesnt work [fixed]
+
+
+
+
+//type alias
+
+type Magic=string|number;
+type HasName={name:string}
+
+//self refrencing types dont work ?
+const x=[1,2,[1,2,3]]
+type NumVal=1|2|NumArr;
+type NumArr=NumVal[];
+
+
+//call signatures 
+
+interface contact{
+    (contact:email|phno,method:string):void
+
+}
+
+//with type
+type Contact2=(contact:email|phno,method:string)=>void;
+
+//no adddition type info while defining function
+
+//hover over parameters to check
+const emailer:contact=(_contact,_message)=>{
+
+}
