@@ -41,6 +41,8 @@ function validate(input:email):email{
 }
 validate({name:"mike",email:"dsadsa"});
 
+//function overloading
+
 //type signature
 
 function typeSignatures(method:"email"|"phone",...people:(email|phno)[]):void{
@@ -87,6 +89,7 @@ type NumArr=NumVal[];
 
 //call signatures 
 
+//with interface
 interface contact{
     (contact:email|phno,method:string):void
 
@@ -99,5 +102,35 @@ type Contact2=(contact:email|phno,method:string)=>void;
 
 //hover over parameters to check
 const emailer:contact=(_contact,_message)=>{
+//interface
+}
+const emailey:Contact2=(_contact,_message)=>{
+//type
+}
+
+//dynamic objects
+//dictionary objects
+
+interface num{
+    [name:string]:undefined|{
+        a:number,
+        b:number
+    }
+}
+const d:num={}
+
+d.abc={a:1,b:2}
+console.log("dynamic",d);
+
+
+//class
+class Contacts implements HasName{
+    
+    constructor( public name:string, protected age:number){
+       this.age=35
+    }
 
 }
+const y=new Contacts("mike",3);
+y.name;//age cant be accessed because it protected
+
